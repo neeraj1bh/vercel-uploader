@@ -15,3 +15,6 @@ export const metadata: Metadata = {
   title: "File Manager",
   description: "View uploaded files",
 };
+
+// Simulate SSR instead of SSG
+export const dynamic = "force-dynamic";
