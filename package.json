@@ -10,13 +10,21 @@
     "prettier": "prettier .",
     "prettier:check": "yarn prettier --check",
     "prettier:write": "yarn prettier --write",
-    "prepare": "husky"
+    "prepare": "husky",
+    "migrate:create": "dotenv -e .env.local prisma migrate dev --name",
+    "studio": "dotenv -e .env.local prisma studio"
   },
   "dependencies": {
     "@prisma/client": "5.12.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "dotenv-cli": "^7.4.1",
+    "lucide-react": "^0.367.0",
     "next": "14.1.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
