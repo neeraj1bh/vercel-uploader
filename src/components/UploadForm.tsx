@@ -2,7 +2,7 @@
 
 import { schema } from "@/lib/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,15 +17,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import uploadFormAction from "@/actions/uploadFile";
+import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 
 const UploadForm = () => {
   type FormSchema = z.infer<typeof schema>;
+  const { toast } = useToast();
   const { pending } = useFormStatus();
 
-  const [state, formAction] = useFormState(uploadFormAction, {
-    message: "",
-  });
+  const [state, formAction] = useFormState(uploadFormAction, { message: "" });
   const [file, setFile] = useState<File | null>(null);
 
   const form = useForm<FormSchema>({
@@ -36,6 +36,24 @@ const UploadForm = () => {
 
   const fileRef = form.register("file");
   const fileSize = file?.size;
+
+  useEffect(() => {
+    const { error, message } = state;
+    const description = error || message;
+
+    if (description) {
+      const variant = error ? "destructive" : "default";
+      const title = error ? "Error" : "Success";
+
+      toast({
+        variant,
+        title,
+        description,
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state?.data, state?.message, state?.error]);
 
   const onSubmit = () => {
     if ((fileSize ?? 0) > 5 * 1024 * 1024) {
@@ -61,7 +79,6 @@ const UploadForm = () => {
     <div className="mx-auto max-w-xl flex flex-col space-y-10 justify-center items-center h-screen">
       <Form {...form}>
         <form
-          //   action={formAction}
           ref={formRef}
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col justify-center items-center space-y-4"
@@ -81,7 +98,6 @@ const UploadForm = () => {
               );
             }}
           />
-          {/* <input type="file" {...form.register("file")} /> */}
           <Button type="submit" disabled={pending}>
             Submit
           </Button>

@@ -3,11 +3,19 @@
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
+type DataProps = {
+  url: string;
+  downloadUrl: string;
+  pathname: string;
+  contentType?: string;
+  contentDisposition: string;
+};
+
 type FormActionProps = {
   file?: FileList;
   message: string;
   error?: string;
-  data?: any;
+  data?: DataProps;
 };
 
 const uploadFormAction = async (
@@ -17,8 +25,7 @@ const uploadFormAction = async (
   try {
     const data = Object.fromEntries(formData);
     const { file } = data;
-    const { name, size, type } = file as File;
-    console.log(name, size, type, file);
+    const { name } = file as File;
 
     if (!file) {
       throw new Error("File is missing");
@@ -30,8 +37,6 @@ const uploadFormAction = async (
       access: "public",
     });
 
-    console.log(blob);
-
     await callAPI("Upload success");
 
     revalidatePath("/files");
@@ -42,7 +47,7 @@ const uploadFormAction = async (
     await callAPI("Upload failed");
 
     return {
-      message: "File size should be less than 5MB",
+      message: "Something went wrong",
       error: "Upload failed",
     };
   }
