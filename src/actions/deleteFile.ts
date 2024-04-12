@@ -1,6 +1,6 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../prisma/generated/client";
 import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 

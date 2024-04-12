@@ -2,8 +2,7 @@
 
 import fakeDelay from "@/lib/delay";
 import { list } from "@vercel/blob";
-import { PrismaClient } from "@prisma/client";
-import { Filename } from "../../prisma/generated/client";
+import { Filename, PrismaClient } from "../../prisma/generated/client";
 
 const prisma = new PrismaClient();
 
