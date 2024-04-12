@@ -19,11 +19,13 @@ import { Input } from "@/components/ui/input";
 import uploadFormAction from "@/actions/uploadFile";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
+import { Modal, useDialog } from "@/components/Modal";
 
 const UploadForm = () => {
   type FormSchema = z.infer<typeof schema>;
   const { toast } = useToast();
   const { pending } = useFormStatus();
+  const { isOpen, onOpen, onClose } = useDialog();
 
   const [state, formAction] = useFormState(uploadFormAction, { message: "" });
   const [file, setFile] = useState<File | null>(null);
@@ -57,6 +59,7 @@ const UploadForm = () => {
 
   const onSubmit = () => {
     if ((fileSize ?? 0) > 5 * 1024 * 1024) {
+      onOpen();
       form.resetField("file");
     } else {
       const formData = new FormData();
@@ -109,6 +112,11 @@ const UploadForm = () => {
       >
         View Uploaded Files
       </Link>
+      <Modal isOpen={isOpen} onClose={onClose} dialogTitle="Error Uploading File">
+        <div className="flex items-center space-x-2 min-h-10">
+          <p>{"File size should be less than 5MB"}</p>
+        </div>
+      </Modal>
     </div>
   );
 };
