@@ -35,7 +35,7 @@ enum DialogAction {
   Delete = "delete",
 }
 
-const GetFiles: FC<Props> = ({
+const ListFiles: FC<Props> = ({
   blobs: initialBlobs,
   handleDelete,
   handleEdit,
@@ -126,13 +126,13 @@ const GetFiles: FC<Props> = ({
           </p>
           {blobs?.length ? (
             <div className="flex items-center grow">
-              <div className="flex flex-col gap-4 py-7  border rounded-lg h-[500px] overflow-y-scroll w-[350px] md:w-full">
+              <div className="flex flex-col gap-4 py-7 border rounded-lg h-[500px] overflow-y-scroll w-[350px] md:w-full md:p-7">
                 {blobs.map((blob) => (
                   <div
                     key={blob.url}
                     className="flex justify-center items-center space-x-4 md:space-x-7"
                   >
-                    <p className="h-6 max-w-[50%] min-w-[50%] overflow-hidden  text-base text-ellipsis  font-medium tracking-wide">
+                    <p className="h-6 w-56 overflow-hidden text-base text-ellipsis  font-medium tracking-wide">
                       {blob.alias || blob.pathname}
                     </p>
                     <div className="flex gap-4">
@@ -168,7 +168,7 @@ const GetFiles: FC<Props> = ({
             </div>
           )}
         </div>
-        <FileLink href="/" />
+        <FileLink href="/" text="Upload files" />
       </div>
       <UpdateFileNameDialog
         isOpen={isOpen}
@@ -190,4 +190,4 @@ const GetFiles: FC<Props> = ({
   );
 };
 
-export default GetFiles;
+export default ListFiles;

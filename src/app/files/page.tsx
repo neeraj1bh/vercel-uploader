@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import getFiles from "@/actions/getFiles";
-import GetFiles from "@/components/GetFiles";
+import ListFiles from "@/components/ListFiles";
 import deleteFile from "@/actions/deleteFile";
 import editFile from "@/actions/editFile";
 
@@ -9,7 +9,7 @@ const Files = async () => {
   const { data: blobs, message, error } = await getFiles();
 
   return (
-    <GetFiles
+    <ListFiles
       blobs={blobs}
       handleDelete={deleteFile}
       handleEdit={editFile}

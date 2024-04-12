@@ -115,7 +115,7 @@ const UploadForm = () => {
           )}
         </form>
       </Form>
-      <FileLink href="/files" className="absolute" />
+      <FileLink href="/files" className="absolute" text="View Uploaded Files" />
       <BaseDialog isOpen={isOpen} onClose={onClose} dialogTitle="Error Uploading File">
         <div className="flex items-center space-x-2 min-h-10">
           <p>{"File size should be less than 5MB"}</p>
