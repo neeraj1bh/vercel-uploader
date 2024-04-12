@@ -2,7 +2,7 @@
 
 import fakeDelay from "@/lib/delay";
 import { list } from "@vercel/blob";
-import { PrismaClient } from "@prisma/client";
+import { Filename, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -11,9 +11,9 @@ const getFiles = async () => {
     await fakeDelay(2000);
     const { blobs } = await list();
 
-    const fileAliases = await prisma.filename.findMany();
+    const fileAliases: Filename[] = await prisma.filename.findMany();
 
-    fileAliases.forEach((fileAlias) => {
+    fileAliases.forEach((fileAlias: Filename) => {
       const blob = blobs.find((blob) => blob.url.split(".com/")[1] === fileAlias.file);
       if (blob) {
         (blob as any).alias = fileAlias.alias;
