@@ -1,8 +1,8 @@
 "use server";
 
+import { PrismaClient } from "@prisma/client";
 import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
-import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 

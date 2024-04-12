@@ -13,7 +13,8 @@
     "prepare": "husky",
     "migrate:create": "dotenv -e .env.local prisma migrate dev --name",
     "db:push": "dotenv -e .env.local prisma db push",
-    "studio": "dotenv -e .env.local prisma studio"
+    "studio": "dotenv -e .env.local prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
