@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 type Props = {
   href: string;
   className?: string;
+  text: string;
 };
 
-const FileLink: FC<Props> = ({ href, className }) => {
+const FileLink: FC<Props> = ({ href, className, text }) => {
   return (
     <Link
       href={href}
@@ -18,7 +19,7 @@ const FileLink: FC<Props> = ({ href, className }) => {
         className,
       )}
     >
-      View Uploaded Files
+      {text}
     </Link>
   );
 };
