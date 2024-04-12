@@ -18,6 +18,7 @@ export interface ModalProps extends Props {
   dialogDescription?: string;
   onSubmit?: () => void;
   disabled?: boolean;
+  action?: string;
   children?: React.ReactNode;
 }
 export interface DialogProps extends Props {
@@ -43,6 +44,7 @@ export function Modal({
   dialogDescription,
   onSubmit,
   disabled,
+  action,
   children,
 }: ModalProps) {
   return (
@@ -59,7 +61,7 @@ export function Modal({
           </Button>
           {onSubmit && (
             <Button type="submit" onClick={onSubmit} disabled={disabled}>
-              Save changes
+              {action === "rename" ? "Save changes" : "Delete"}
             </Button>
           )}
         </DialogFooter>

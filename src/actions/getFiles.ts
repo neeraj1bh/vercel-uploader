@@ -4,11 +4,21 @@ import fakeDelay from "@/lib/delay";
 import { list } from "@vercel/blob";
 
 const getFiles = async () => {
-  await fakeDelay(2000);
+  try {
+    await fakeDelay(2000);
 
-  const blobs = await list();
+    const { blobs } = await list();
 
-  return blobs;
+    return {
+      message: "Files fetched successfully",
+      data: blobs,
+    };
+  } catch (error) {
+    return {
+      message: "Failed to get files",
+      error: "An error occurred while fetching files",
+    };
+  }
 };
 
 export default getFiles;

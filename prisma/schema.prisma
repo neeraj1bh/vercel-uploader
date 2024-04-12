@@ -15,7 +15,7 @@ datasource db {
 
 model Filename {
     id        String   @id @default(cuid())
-    filename  String
+    file      String   @unique
     alias     String
     deleted   Boolean  @default(false)
     createdAt DateTime @default(now())

@@ -2,11 +2,21 @@ import React from "react";
 import type { Metadata } from "next";
 import getFiles from "@/actions/getFiles";
 import GetFiles from "@/components/GetFiles";
+import deleteFile from "@/actions/deleteFile";
+import editFile from "@/actions/editFile";
 
 const Files = async () => {
-  const { blobs } = await getFiles();
+  const { data: blobs, message, error } = await getFiles();
 
-  return <GetFiles blobs={blobs} />;
+  return (
+    <GetFiles
+      blobs={blobs}
+      handleDelete={deleteFile}
+      handleEdit={editFile}
+      message={message}
+      error={error}
+    />
+  );
 };
 
 export default Files;
