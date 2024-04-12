@@ -57,9 +57,7 @@ export default uploadFormAction;
 
 // Function to call API
 async function callAPI(status: string) {
-  const response = await fetch("https://www.google.com/", {
-    cache: "no-store",
-  });
+  const response = await fetch("https://www.google.com/");
   if (!response.ok) {
     throw new Error("API request failed");
   }

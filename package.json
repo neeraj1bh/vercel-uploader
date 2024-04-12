@@ -7,16 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "vercel-build": "dotenv -e .env.local prisma generate && dotenv -e .env.local prisma migrate deploy && next build",
     "prettier": "prettier .",
-    "prettier:check": "yarn prettier --check",
-    "prettier:write": "yarn prettier --write",
+    "prettier:check": "pnpm prettier --check",
+    "prettier:write": "pnpm prettier --write",
     "prepare": "husky",
     "migrate:create": "dotenv -e .env.local prisma migrate dev --name",
-    "studio": "dotenv -e .env.local prisma studio"
+    "db:push": "dotenv -e .env.local prisma db push",
+    "studio": "dotenv -e .env.local prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "5.12.1",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
