@@ -52,8 +52,6 @@ const GetFiles = ({
     setName("");
   };
 
-  console.log(blobs, initialBlobs);
-
   const handleSubmit = async () => {
     let response;
     try {

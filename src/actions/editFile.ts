@@ -7,7 +7,6 @@ const prisma = new PrismaClient();
 
 const editFile = async (newName: string, oldName: string) => {
   try {
-    console.log(newName, oldName);
     const file = oldName.split(".com/")[1];
 
     await fakeDelay(1000);
