@@ -2,12 +2,13 @@
 
 import fakeDelay from "@/lib/delay";
 import { PrismaClient } from "../../prisma/generated/client";
+import extractFileNameFromUrl from "@/lib/extractFileNameFromUrl";
 
 const prisma = new PrismaClient();
 
 const editFile = async (newName: string, oldName: string) => {
   try {
-    const file = oldName.split(".com/")[1];
+    const file = extractFileNameFromUrl(oldName);
 
     await fakeDelay(1000);
     const existingFile = await prisma.filename.findUnique({

@@ -1,5 +1,6 @@
 "use server";
 
+import extractFileNameFromUrl from "@/lib/extractFileNameFromUrl";
 import { PrismaClient } from "../../prisma/generated/client";
 import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
@@ -7,7 +8,7 @@ import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 
 const updateFileStatus = async (url: string, deleted: boolean) => {
-  const file = url.split(".com/")[1];
+  const file = extractFileNameFromUrl(url);
 
   const existingFile = await prisma.filename.findUnique({
     where: { file },

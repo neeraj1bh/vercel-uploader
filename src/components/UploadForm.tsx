@@ -18,15 +18,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import uploadFormAction from "@/actions/uploadFile";
 import { useToast } from "@/components/ui/use-toast";
-import Link from "next/link";
-import { Modal, useDialog } from "@/components/Modal";
+import { useDialog } from "../hooks/useDialog";
+import { BaseDialog } from "./modal";
+import FileLink from "./FileLink";
+import SpinnerIcon from "@/assets/SpinnerIcon";
 
 const UploadForm = () => {
   type FormSchema = z.infer<typeof schema>;
   const { toast } = useToast();
-  const { pending } = useFormStatus();
   const { isOpen, onOpen, onClose } = useDialog();
-
+  const [loading, setLoading] = useState(false);
   const [state, formAction] = useFormState(uploadFormAction, { message: "" });
   const [file, setFile] = useState<File | null>(null);
 
@@ -46,6 +47,7 @@ const UploadForm = () => {
     if (description) {
       const variant = error ? "destructive" : "default";
       const title = error ? "Error" : "Success";
+      setLoading(false);
 
       toast({
         variant,
@@ -58,9 +60,11 @@ const UploadForm = () => {
   }, [state?.data, state?.message, state?.error]);
 
   const onSubmit = () => {
+    setLoading(true);
     if ((fileSize ?? 0) > 5 * 1024 * 1024) {
       onOpen();
       form.resetField("file");
+      setLoading(false);
     } else {
       const formData = new FormData();
       if (file) {
@@ -101,22 +105,22 @@ const UploadForm = () => {
               );
             }}
           />
-          <Button type="submit" disabled={pending}>
-            Submit
-          </Button>
+          {loading ? (
+            <Button className="flex items-center justify-center" disabled>
+              <SpinnerIcon className="mr-4 animate-spin" />
+              Uploading...
+            </Button>
+          ) : (
+            <Button type="submit">Submit</Button>
+          )}
         </form>
       </Form>
-      <Link
-        href="/files"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 text-center bottom-0 w-full absolute"
-      >
-        View Uploaded Files
-      </Link>
-      <Modal isOpen={isOpen} onClose={onClose} dialogTitle="Error Uploading File">
+      <FileLink href="/files" className="absolute" />
+      <BaseDialog isOpen={isOpen} onClose={onClose} dialogTitle="Error Uploading File">
         <div className="flex items-center space-x-2 min-h-10">
           <p>{"File size should be less than 5MB"}</p>
         </div>
-      </Modal>
+      </BaseDialog>
     </div>
   );
 };
