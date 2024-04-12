@@ -49,7 +49,7 @@ else
 
     # Import env variables from .env
     set -a
-    source .env
+    source .env.local
 
     DB_PASSWORD=$(echo $DATABASE_URL | awk -F':' '{print $3}' | awk -F'@' '{print $1}')
 
@@ -57,7 +57,7 @@ else
         echo "You are using the default database password"
         read -p "Should we generate a random password for you? [y/N]: " -r REPLY
         if ! [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "Please set a password in the .env file and try again"
+        echo "Please set a password in the .env.local file and try again"
         exit 1
         fi
         # Generate a random URL-safe password
@@ -65,7 +65,7 @@ else
         # Replace the password substring in the DATABASE_URL with the new password
         NEW_DATABASE_URL=$(echo $DATABASE_URL | sed "s/$DB_PASSWORD/$NEW_DB_PASSWORD/")
         # Update the .env file with the new DATABASE_URL
-        sed -i -e "s#^DATABASE_URL=.*#DATABASE_URL=\"$NEW_DATABASE_URL\"#" .env
+        sed -i -e "s#^DATABASE_URL=.*#DATABASE_URL=\"$NEW_DATABASE_URL\"#" .env.local
     fi
 
     # Create and start the container

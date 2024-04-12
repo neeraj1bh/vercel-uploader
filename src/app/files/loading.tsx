@@ -8,7 +8,7 @@ const loading = () => {
       <div className="flex flex-col items-center grow">
         <Skeleton className="h-12 w-[250px] rounded-md mt-6" />
         <div className="flex items-center justify-center grow">
-          <div className="flex flex-col gap-4 border rounded-lg h-[500px] overflow-scroll p-7">
+          <div className="flex flex-col gap-4 border rounded-lg h-[500px] overflow-scroll p-7 w-[350px] md:w-full">
             {Array.from({ length: 10 }).map((_, index) => (
               <SkeletonCard key={index} />
             ))}
